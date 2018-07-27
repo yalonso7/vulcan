@@ -75,6 +75,13 @@
                       </div>
                       
                       <div class="form-group clearfix">
+                          <label class="control-label " for="confirm"> Repo Location</label>
+                          <div class="field">
+                            <%= form.text_field :repo, id: :repo, class: "form-control" %>
+                          </div>
+                      </div>
+                      
+                      <div class="form-group clearfix">
                           <label class="control-label" for="name"> Project Summary *</label>
                           <div class="field">
                             <%= form.text_area :summary, id: :project_summary, class: "form-control", rows:2 %>
