@@ -5,6 +5,8 @@ git_source(:github) do |repo_name|
   "https://github.com/#{repo_name}.git"
 end
 
+gem "inspec"
+gem 'roo'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.1.6'
@@ -39,8 +41,15 @@ group :development, :test do
   # Adds support for Capybara system testing and selenium driver
   gem 'capybara', '~> 2.13'
   gem 'selenium-webdriver'
+<<<<<<< HEAD
   gem 'rspec-rails', '~> 3.6'
 
+=======
+  gem 'rspec-rails', '~> 3.7'
+  gem 'factory_bot_rails'
+  gem 'database_cleaner', '~> 1.6', '>= 1.6.1'
+  gem 'rails-controller-testing'
+>>>>>>> 2e1dd1b035835c9afccce0c81ce604799bacc955
 end
 
 group :development do
@@ -53,6 +62,10 @@ group :development do
   gem 'rspec-rails', '~> 3.6'
 end
 
+group :test do
+  gem 'shoulda-matchers'
+end
+
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
@@ -62,10 +75,10 @@ gem 'jquery-ui-rails'
 gem "flot-rails"
 gem 'jquery-datatables-rails', '~> 3.4.0'
 gem "font-awesome-rails"
+
 # gem 'webpacker', '~> 3.3'
-gem 'inspec'
 gem 'word_wrap'
-gem "roo"
+
 gem 'nokogiri-happymapper', :require => 'happymapper'
 # gem 'axlsx', '2.1.0.pre'
 # gem 'axlsx_rails'
@@ -84,4 +97,10 @@ gem 'rolify'
 
 gem "devise_ldap_authenticatable"
 
+<<<<<<< HEAD
 gem 'git'
+=======
+gem 'faker'
+
+gem 'inspec_tools', :git => 'https://github.com/aaronlippold/inspec-tools.git', :branch => 'cleanup'
+>>>>>>> 2e1dd1b035835c9afccce0c81ce604799bacc955
