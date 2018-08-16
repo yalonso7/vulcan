@@ -41,15 +41,10 @@ group :development, :test do
   # Adds support for Capybara system testing and selenium driver
   gem 'capybara', '~> 2.13'
   gem 'selenium-webdriver'
-<<<<<<< HEAD
-  gem 'rspec-rails', '~> 3.6'
-
-=======
   gem 'rspec-rails', '~> 3.7'
   gem 'factory_bot_rails'
   gem 'database_cleaner', '~> 1.6', '>= 1.6.1'
   gem 'rails-controller-testing'
->>>>>>> 2e1dd1b035835c9afccce0c81ce604799bacc955
 end
 
 group :development do
@@ -97,10 +92,7 @@ gem 'rolify'
 
 gem "devise_ldap_authenticatable"
 
-<<<<<<< HEAD
 gem 'git'
-=======
 gem 'faker'
 
 gem 'inspec_tools', :git => 'https://github.com/aaronlippold/inspec-tools.git', :branch => 'cleanup'
->>>>>>> 2e1dd1b035835c9afccce0c81ce604799bacc955
