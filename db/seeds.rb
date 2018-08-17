@@ -110,13 +110,8 @@ user.updated_at = Date.new
 user.save
 user.add_role "admin"
 
-<<<<<<< HEAD
-if true
-  puts "DEVELOPMENT"
-=======
 case Rails.env
 when 'development'
->>>>>>> 2e1dd1b035835c9afccce0c81ce604799bacc955
   vendor = Vendor.new
   vendor.vendor_name = 'vendor'
   vendor.save
@@ -129,22 +124,18 @@ when 'development'
   user_vendor.email = 'vendor@vendor.com'
   user_vendor.password = 'vvvvvv'
   user_vendor.vendors << vendor
-<<<<<<< HEAD
-=======
+  
   user_vendor.created_at = Date.new
   user_vendor.updated_at = Date.new
->>>>>>> 2e1dd1b035835c9afccce0c81ce604799bacc955
   user_vendor.save
   user_vendor.add_role 'vendor'
   
   user_sponsor = User.new
   user_sponsor.email = 'sponsor@sponsor.com'
   user_sponsor.password = 'vvvvvv'
-<<<<<<< HEAD
-=======
+
   user_sponsor.created_at = Date.new
   user_sponsor.updated_at = Date.new
->>>>>>> 2e1dd1b035835c9afccce0c81ce604799bacc955
   user_sponsor.sponsor_agencies << sponsor
   user_sponsor.save
   user_sponsor.add_role 'sponsor'

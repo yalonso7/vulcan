@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180810164306) do
+ActiveRecord::Schema.define(version: 20180817151808) do
 
   create_table "ccis", force: :cascade do |t|
     t.string "cci"
@@ -184,6 +184,7 @@ ActiveRecord::Schema.define(version: 20180810164306) do
     t.string "encrypted_repo_iv"
     t.integer "sponsor_agency_id"
     t.integer "vendor_id"
+    t.string "branch"
     t.index ["sponsor_agency_id"], name: "index_projects_on_sponsor_agency_id"
     t.index ["vendor_id"], name: "index_projects_on_vendor_id"
   end

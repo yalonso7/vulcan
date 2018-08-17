@@ -1,0 +1,3 @@
+[submodule "git/test/vendor@vendor.com/test"]
+	path = git/test/vendor@vendor.com/test
+	url = /Users/dromazmj/Documents/MITRE/vulcan/git/test/srv/test.git

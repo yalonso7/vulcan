@@ -59,13 +59,15 @@ class Project < ApplicationRecord
     system("git init --bare")
     Dir.mkdir("#{Rails.root}/git/#{self.name}/#{user_email}")
     Dir.chdir("#{Rails.root}/git/#{self.name}/#{user_email}")
-    system("git submodule add #{Rails.root}/git/#{self.name}/srv/#{self.name}.git")
+    system("git submodule add -f #{Rails.root}/git/#{self.name}/srv/#{self.name}.git")
     Dir.chdir("#{Rails.root}/git/#{self.name}/#{user_email}/#{self.name}")
     system("touch README.md")
     File.open('vulcan_project.xml', 'w') { |file| file.write(to_xml('master')) }
     system('git add .')
     system('git commit -m "Initial Commit"')
     system('git push origin master')
+    system("git checkout -b #{self.name}")
+    system("git push origin #{self.name}")
   end
   
   def to_xccdf(params)
@@ -116,29 +118,44 @@ class Project < ApplicationRecord
         xml.repo self.repo
         xml.controls {
           self.project_controls.each do |control|
-            xml.id control.id
-            xml.title control.title
-            xml.description control.description
-            xml.impact control.impact
-            xml.control_id control.control_id
-            xml.code control.code
-            xml.checktext control.checktext
-            xml.fixtext control.fixtext
-            xml.justification control.justification
-            xml.applicability control.applicability
-            xml.status control.status
-            xml.nist_controls {
-              control.nist_controls.each do |nist|
-                xml.id = nist.id
-                xml.index = nist.index
-                xml.version = nist.version
-                xml.ccis {
-                  nist.ccis.each do |cci|
-                    xml.id = cci.id
-                    xml.cci = cci.cci 
-                  end
-                }
-              end
+            xml.control {
+              xml.id control.id
+              xml.title control.title
+              xml.description control.description
+              xml.impact control.impact
+              xml.control_id control.control_id
+              xml.code control.code
+              xml.checktext control.checktext
+              xml.fixtext control.fixtext
+              xml.justification control.justification
+              xml.applicability control.applicability
+              xml.status control.status
+              xml.nist_controls {
+                control.nist_controls.each do |nist|
+                  xml.nist_control {
+                    xml.id = nist.id
+                    xml.index = nist.index
+                    xml.version = nist.version
+                    xml.ccis {
+                      nist.ccis.each do |cci|
+                        xml.cci {
+                          xml.id = cci.id
+                          xml.cci = cci.cci   
+                        }
+                      end
+                    }  
+                  }
+                end
+              }  
+            }
+          end
+        }
+        xml.srgs {
+          self.srgs.each do |srg|
+            xml.srg {
+              xml.id = srg.id
+              xml.title = srg.title
+              xml.description =  srg.description
             }
           end
         }

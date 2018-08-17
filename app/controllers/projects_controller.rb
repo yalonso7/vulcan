@@ -95,7 +95,7 @@ class ProjectsController < ApplicationController
         project_params[:srg_ids] = project_params[:srg_ids].select {|srg_id| srg_id != "0"} unless project_params[:srg_ids].nil?
         project_params[:srg_ids] = project_params[:srg_ids].drop(1) unless project_params[:srg_ids].nil?
         project_params[:users] = project_params[:users].select {|user| user != "0"} unless project_params[:users].nil?
-        @project = Project.new(get_project_json(project_params))
+        @project = Project.new(get_project_json(project_params, 'master'))
         @project.srgs << Srg.where(title: project_params[:srg_ids])
         @project.vendor = Vendor.find(params[:project][:vendor_id])
         @project.sponsor_agency = SponsorAgency.find(params[:project][:sponsor_agency_id])
@@ -331,7 +331,7 @@ private
     project_hash.to_json
   end
 
-  def get_project_json(params)
+  def get_project_json(params, branch)
     new_params = {
       name:            params[:name],
       title:           params[:title],
@@ -342,7 +342,8 @@ private
       summary:         params[:summary],
       version:         params[:version],
       repo:            params[:repo],
-      status:          'pending'
+      status:          'pending',
+      branch:          branch
     }
   end
   
