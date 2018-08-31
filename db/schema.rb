@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180817151808) do
+ActiveRecord::Schema.define(version: 20180820192128) do
 
   create_table "ccis", force: :cascade do |t|
     t.string "cci"
@@ -180,11 +180,11 @@ ActiveRecord::Schema.define(version: 20180817151808) do
     t.string "encrypted_status_iv"
     t.string "encrypted_branch"
     t.string "encrypted_branch_iv"
-    t.string "encrypted_repo"
-    t.string "encrypted_repo_iv"
     t.integer "sponsor_agency_id"
     t.integer "vendor_id"
     t.string "branch"
+    t.integer "parent_id"
+    t.integer "repo_id"
     t.index ["sponsor_agency_id"], name: "index_projects_on_sponsor_agency_id"
     t.index ["vendor_id"], name: "index_projects_on_vendor_id"
   end
@@ -201,6 +201,18 @@ ActiveRecord::Schema.define(version: 20180817151808) do
     t.integer "project_id"
     t.index ["project_id"], name: "index_users_projects_on_project_id"
     t.index ["user_id"], name: "index_users_projects_on_user_id"
+  end
+
+  create_table "repos", force: :cascade do |t|
+    t.string "encrypted_name"
+    t.string "encrypted_name_iv"
+    t.string "encrypted_repo_url"
+    t.string "encrypted_repo_url_iv"
+    t.string "encrypted_repo_type"
+    t.string "encrypted_repo_type_iv"
+    t.integer "parent_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "requests", force: :cascade do |t|

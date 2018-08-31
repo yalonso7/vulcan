@@ -1,3 +1,36 @@
-[submodule "git/test/vendor@vendor.com/test"]
-	path = git/test/vendor@vendor.com/test
-	url = /Users/dromazmj/Documents/MITRE/vulcan/git/test/srv/test.git
+[submodule "git/test_git/vendor@vendor.com/test_git"]
+	path = git/test_git/vendor@vendor.com/test_git
+	url = /Users/dromazmj/Documents/MITRE/vulcan/git/test_git/srv/test_git.git
+[submodule "git/test_git/sponsor@sponsor.com/test_git"]
+	path = git/test_git/sponsor@sponsor.com/test_git
+	url = /Users/dromazmj/Documents/MITRE/vulcan/git/test_git/srv/test_git.git
+[submodule "git/test_git1/vendor@vendor.com/test_git1"]
+	path = git/test_git1/vendor@vendor.com/test_git1
+	url = /Users/dromazmj/Documents/MITRE/vulcan/git/test_git1/srv/test_git1.git
+[submodule "git/test_git1/sponsor@sponsor.com/test_git1"]
+	path = git/test_git1/sponsor@sponsor.com/test_git1
+	url = /Users/dromazmj/Documents/MITRE/vulcan/git/test_git1/srv/test_git1.git
+[submodule "git/test_git2/vendor@vendor.com/test_git2"]
+	path = git/test_git2/vendor@vendor.com/test_git2
+	url = /Users/dromazmj/Documents/MITRE/vulcan/git/test_git2/srv/test_git2.git
+[submodule "git/test_git2/sponsor@sponsor.com/test_git2"]
+	path = git/test_git2/sponsor@sponsor.com/test_git2
+	url = /Users/dromazmj/Documents/MITRE/vulcan/git/test_git2/srv/test_git2.git
+[submodule "git/test_git3/vendor@vendor.com/test_git3"]
+	path = git/test_git3/vendor@vendor.com/test_git3
+	url = /Users/dromazmj/Documents/MITRE/vulcan/git/test_git3/srv/test_git3.git
+[submodule "git/test_git3/sponsor@sponsor.com/test_git3"]
+	path = git/test_git3/sponsor@sponsor.com/test_git3
+	url = /Users/dromazmj/Documents/MITRE/vulcan/git/test_git3/srv/test_git3.git
+[submodule "git/test_git5/vendor@vendor.com/test_git5"]
+	path = git/test_git5/vendor@vendor.com/test_git5
+	url = /Users/dromazmj/Documents/MITRE/vulcan/git/test_git5/srv/test_git5.git
+[submodule "git/test_git5/sponsor@sponsor.com/test_git5"]
+	path = git/test_git5/sponsor@sponsor.com/test_git5
+	url = /Users/dromazmj/Documents/MITRE/vulcan/git/test_git5/srv/test_git5.git
+[submodule "git/git_test4/vendor@vendor.com/git_test4"]
+	path = git/git_test4/vendor@vendor.com/git_test4
+	url = /Users/dromazmj/Documents/MITRE/vulcan/git/git_test4/srv/git_test4.git
+[submodule "git/git_test4/sponsor@sponsor.com/git_test4"]
+	path = git/git_test4/sponsor@sponsor.com/git_test4
+	url = /Users/dromazmj/Documents/MITRE/vulcan/git/git_test4/srv/git_test4.git
