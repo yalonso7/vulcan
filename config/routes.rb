@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :repos
   devise_for :users, controllers: { 
     registrations: 'users/registrations',
     sessions: 'users/sessions' ,
@@ -42,7 +43,12 @@ Rails.application.routes.draw do
   match 'project_controls/:id/run_test' => 'project_controls#run_test', :as => :run_test, :via => :get
   match 'update_code' => 'project_controls#update_code', :as => :update_code, :via => :post
   match 'create_request' => 'resuests#create_request', :as => :create_request, :via => :post
+  match 'repo/:id/commit' => 'repos#commit', :as => :commit, :via => :put
+
   match 'project/:id/approve_project' => 'projects#approve_project', :as => :approve_project, :via => :post
+  
+  match 'project/:id/create_pull' => 'projects#create_pull', :as => :create_pull, :via => :post
+
   
   match 'link_control' => 'project_controls#link_control', :as => :link_control, :via => :post
 

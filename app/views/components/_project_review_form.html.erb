@@ -132,7 +132,7 @@
 </div>
 <div class="modal-footer">
   <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-  <% if current_user.has_role? :sponsor %>
+  <% if current_user.has_role?(:sponsor) && @project.branch == 'master' %>
     <%= link_to 'Approve project', approve_project_path(@project), class: 'btn btn-success', method: :post %>
   <% end %>
 </div>

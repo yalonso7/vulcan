@@ -29,8 +29,6 @@ class ProjectsController < ApplicationController
         format.csv  { send_data Project.find(params[:id]).to_csv, :filename => Project.find(params[:id]).name + '-overview.csv' }
         format.json { send_data Project.find(params[:id]).to_prof, :filename => Project.find(params[:id]).name + '-overview.zip' }
         format.xccdf { send_data Project.find(params[:id]).to_xccdf(xccdf_params), :filename => Project.find(params[:id]).name + '-overview-xccdf.xml' }
-
-        format.xlsx
       end
     end
   end
@@ -102,10 +100,17 @@ class ProjectsController < ApplicationController
         
         @project.users << @project.vendor.users
         @project.users << @project.sponsor_agency.users
+        
+        master_repo = Repo.new({name: @project.name, repo_url: "#{Rails.root}/git/#{@project.name}/srv/#{@project.name}.git", repo_type: 'local'}) if project_params[:repo].empty?
+        master_repo = Repo.new({name: @project.name, repo_url: project_params[:repo], repo_type: 'github'}) unless project_params[:repo].empty?
+        master_repo.save
+        @project.repo = Repo.new({name: @project.name, repo_url: "#{Rails.root}/git/#{@project.name}/master/#{@project.name}", repo_type: 'local', parent_id: master_repo.id}) if project_params[:repo].empty?
+        
+        assign_project_to_users
+        @project.create_local_git(current_user.email)
+
         respond_to do |format|
           if @project.save!
-            assign_project_to_users
-            @project.create_local_git(current_user.email)
             format.html { redirect_to projects_path, notice: 'Project was successfully created.' }
             format.json { render :show, status: :created, location: @project }
           else
@@ -184,13 +189,33 @@ class ProjectsController < ApplicationController
   end
   
   def approve_project
-    @project.update_attribute(:status, 'approved')
-    get_project_controls(@project.srgs).each do |control|
-      project_control = @project.project_controls.create(control[:control_params])
-      project_control.nist_controls << control[:nist_params]
-      assign_control_to_users(project_control)
+    if current_user.has_role(:sponsor, @project) && @project.branch == 'master'
+      @project.update_attribute(:status, 'approved')
+      get_project_controls(@project.srgs).each do |control|
+        project_control = @project.project_controls.create(control[:control_params])
+        project_control.nist_controls << control[:nist_params]
+        assign_control_to_users(project_control)
+      end
+      
+      @project.children.each do |child_project|
+        child_project.update_attribute(:status, 'approved')
+        get_project_controls(@project.srgs).each do |control|
+          project_control = child_project.project_controls.create(control[:control_params])
+          project_control.nist_controls << control[:nist_params]
+          assign_control_to_users(project_control)
+        end
+      end
+      redirect_to projects_path, notice: 'Project Approved.'
+    else
+      redirect_to projects_path, notice: 'Project Not Approved.'
     end
-    redirect_to projects_path, notice: 'Project Approved.'
+  end
+  
+  ###
+  #  Updates the master repo from this repo
+  ###
+  def commit_project_changes
+    
   end
 
 private
@@ -341,7 +366,6 @@ private
       license:         params[:license],
       summary:         params[:summary],
       version:         params[:version],
-      repo:            params[:repo],
       status:          'pending',
       branch:          branch
     }
@@ -379,13 +403,13 @@ private
                                             current_user.has_role?(:admin, Project.find(params[:id]))
   end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def project_params
-      params.require(:project).permit(:name, :title, :maintainer, :copyright, :copyright_email, :license, :summary, :version, :sha256, srg_ids:[], users:[])
-    end
-    
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def xccdf_params
-      params.permit(:benchmark_id, :benchmark_title, :benchmark_notice, :benchmark_plaintext, :benchmark_plaintext_id, :reference_href, :reference_dc_source, :benchmark_status, :commit, :id, :format)
-    end
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def project_params
+    params.require(:project).permit(:name, :title, :maintainer, :copyright, :copyright_email, :license, :summary, :version, :sha256, :repo, srg_ids:[], users:[])
+  end
+  
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def xccdf_params
+    params.permit(:benchmark_id, :benchmark_title, :benchmark_notice, :benchmark_plaintext, :benchmark_plaintext_id, :reference_href, :reference_dc_source, :benchmark_status, :commit, :id, :format)
+  end
 end

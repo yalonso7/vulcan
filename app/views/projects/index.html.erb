@@ -107,7 +107,8 @@
                       <button type="button" class="btn btn-secondary dropdown-toggle waves-effect" data-toggle="dropdown" aria-expanded="false"> Actions <span class="caret"></span> </button>
                       <div class="dropdown-menu">
                           <a onclick="review_project(<%= project.id %>)" class="dropdown-item btn btn-info">Review Project</a>
-                          <%= link_to 'Edit/Collapse Controls', edit_project_path(project), class: 'dropdown-item btn btn-warning'%>
+                          <%= link_to 'Edit/Collapse Controls', edit_project_path(project), class: 'dropdown-item btn btn-default'%>
+                          <%= link_to 'Repo Control', repo_path(project.repo), class: 'dropdown-item btn btn-default'%>
                           <%= link_to 'Delete', project, method: :delete, data: { confirm: 'Are you sure?' }, class: 'dropdown-item btn btn-danger' %>
                       </div>
                   </div>

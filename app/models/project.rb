@@ -1,11 +1,13 @@
 require 'inspec/objects'
 require 'date'
+require 'git'
 ###
 # TODO: FORM VALIDATION
 ###
 class Project < ApplicationRecord
   resourcify
-  before_destroy :destroy_project_controls
+  before_destroy :destroy_project_controls, :destroy_local_git
+  after_commit :update_project_xml, if: :persisted?
   
 
   has_many  :project_controls
@@ -17,6 +19,14 @@ class Project < ApplicationRecord
   serialize :srg_ids
   accepts_nested_attributes_for :project_controls
   
+  has_many :children, class_name: "Project",
+                      foreign_key: "parent_id"
+                  
+  belongs_to :parent, class_name: "Project",
+                      foreign_key: "parent_id", 
+                      optional: true
+                      
+  belongs_to :repo, optional: true
   
   attribute :name
   attribute :title
@@ -38,7 +48,6 @@ class Project < ApplicationRecord
   attr_encrypted :version, key: Rails.application.secrets.db
   attr_encrypted :status, key: Rails.application.secrets.db
   attr_encrypted :branch, key: Rails.application.secrets.db
-  attr_encrypted :repo, key: Rails.application.secrets.db
 
   
   # def to_csv
@@ -52,22 +61,8 @@ class Project < ApplicationRecord
   # end
   
   def create_local_git(user_email)
-    Dir.mkdir("#{Rails.root}/git/#{self.name}")
-    Dir.mkdir("#{Rails.root}/git/#{self.name}/srv")
-    Dir.mkdir("#{Rails.root}/git/#{self.name}/srv/#{self.name}.git")
-    Dir.chdir("#{Rails.root}/git/#{self.name}/srv/#{self.name}.git")
-    system("git init --bare")
-    Dir.mkdir("#{Rails.root}/git/#{self.name}/#{user_email}")
-    Dir.chdir("#{Rails.root}/git/#{self.name}/#{user_email}")
-    system("git submodule add -f #{Rails.root}/git/#{self.name}/srv/#{self.name}.git")
-    Dir.chdir("#{Rails.root}/git/#{self.name}/#{user_email}/#{self.name}")
-    system("touch README.md")
-    File.open('vulcan_project.xml', 'w') { |file| file.write(to_xml('master')) }
-    system('git add .')
-    system('git commit -m "Initial Commit"')
-    system('git push origin master')
-    system("git checkout -b #{self.name}")
-    system("git push origin #{self.name}")
+    create_master_git
+    create_user_projects
   end
   
   def to_xccdf(params)
@@ -99,9 +94,55 @@ class Project < ApplicationRecord
     File.read("tmp/#{@random}/#{@name}.zip")
   end
   
+  def update_project_xml
+    puts "HERE"
+    File.open("#{Rails.root}/git/#{self.name}/#{self.branch}/#{self.name}/vulcan_project.xml", 'w') { |file| file.write(to_xml) }
+  end
+  
   private
   
-  def to_xml(branch)
+  def create_user_projects
+    self.users.each do |user|
+      user_project = self.dup
+      user_project.users = [user]
+      user_project.parent = self
+      user_project.branch = user.email
+
+      user_project.repo = Repo.new({name: self.name, repo_url: "#{Rails.root}/git/#{user_project.name}/#{user.email}/#{user_project.name}", repo_type: 'local', parent_id: user_project.parent.repo.parent.id})
+      user_project.users.each {|user| user.add_role(user.roles.first.name, user_project) }
+      Dir.mkdir("#{Rails.root}/git/#{self.name}/#{user.email}")
+      Dir.chdir("#{Rails.root}/git/#{self.name}/#{user.email}")
+      # system("git submodule add -f #{Rails.root}/git/#{self.name}/srv/#{self.name}.git")
+      system("git subtree add --prefix #{Rails.root}/git/#{self.name}/#{user.email} #{Rails.root}/git/#{self.name}/srv/#{self.name}.git master")
+      Dir.chdir("#{Rails.root}/git/#{self.name}/#{user.email}/#{self.name}")
+      system("git checkout -b #{user.email}")
+      system('git commit -m "Initial Commit"')
+      system("git push origin #{user.email}")
+      
+      user_project.save
+    end
+  end
+  
+  def create_master_git
+    Dir.mkdir("#{Rails.root}/git/#{self.name}")
+    Dir.mkdir("#{Rails.root}/git/#{self.name}/srv")
+    Dir.mkdir("#{Rails.root}/git/#{self.name}/srv/#{self.name}.git")
+    Dir.chdir("#{Rails.root}/git/#{self.name}/srv/#{self.name}.git")
+    system("git init --bare")
+    # Dir.mkdir("#{Rails.root}/git/#{self.name}/master")
+    # Dir.chdir("#{Rails.root}/git/#{self.name}/master")
+    require 'pry'
+    binding.pry
+    system("git subtree add --prefix #{Rails.root}/git/#{self.name}/master #{Rails.root}/git/#{self.name}/srv/#{self.name}.git master")
+    Dir.chdir("#{Rails.root}/git/#{self.name}/master")
+    system("touch README.md")
+    File.open('vulcan_project.xml', 'w') { |file| file.write(to_xml) }
+    system('git add .')
+    system('git commit -m "Initial Commit"')
+    system('git push origin master')
+  end
+  
+  def to_xml
     builder = Nokogiri::XML::Builder.new do |xml|
       xml.root {
         xml.id self.id
@@ -114,7 +155,6 @@ class Project < ApplicationRecord
         xml.summary self.summary
         xml.version self.version
         xml.status self.status
-        xml.branch branch
         xml.repo self.repo
         xml.controls {
           self.project_controls.each do |control|
@@ -275,6 +315,22 @@ class Project < ApplicationRecord
   end
 
   def destroy_project_controls
-    self.project_controls.destroy_all   
+    self.project_controls.destroy_all
+  end
+  
+  def destroy_local_git
+    g = Git.open("#{Rails.root}", :log => Logger.new(STDOUT))
+    if self.branch != 'master'
+      cached_name = "#{Rails.root}/git/#{self.name}/#{self.branch}/#{self.name}"
+      g.remove(cached_name, :cached => true)
+      system("rm -rf #{Rails.root}/.git/modules/git/#{self.name}/#{self.branch}")
+      system("rm -rf #{Rails.root}/git/#{self.name}/#{self.branch}")
+    else
+      self.children.each do |child_project|
+        child_project.destroy
+      end
+      system("rm -rf #{Rails.root}/.git/modules/git/#{self.name}")
+      system("rm -rf #{Rails.root}/git/#{self.name}")
+    end
   end
 end
