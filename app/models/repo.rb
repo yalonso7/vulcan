@@ -17,13 +17,18 @@ class Repo < ApplicationRecord
   attr_encrypted :repo_url, key: Rails.application.secrets.db
   attr_encrypted :repo_type, key: Rails.application.secrets.db
   
-  def commit
-    g = Git.open(self.repo_url, :log => Logger.new(STDOUT))
+  def commit_push(message)
+    # g = Git.open(self.repo_url, :log => Logger.new(STDOUT))
     # require 'pry'
     # binding.pry
-    g.index.path = "#{Rails.root}/.git/modules/git/#{self.projects[0].name}/#{self.projects[0].branch}/#{self.projects[0].name}/index"
-    g.add
-    g.gcommit('')
-    g.push
+    Dir.chdir("#{Rails.root}/git/#{self.projects[0].name}/#{self.projects[0].branch}/#{self.projects[0].name}")
+    system("git add .")
+    system("git commit -m '#{message}'")
+    system("git push")
+  end
+  
+  def create_pull_request
+    Dir.chdir("#{Rails.root}/git/#{self.projects[0].name}/#{self.projects[0].branch}/#{self.projects[0].name}")
+    system("git request-pull . ")
   end
 end

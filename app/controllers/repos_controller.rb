@@ -10,10 +10,13 @@ class ReposController < ApplicationController
   # GET /repos/1
   # GET /repos/1.json
   def show
-    # require 'pry'
-    # binding.pry
     @g = Git.open(@repo.repo_url, :log => Logger.new(STDOUT))
     @g.index.path = "#{Rails.root}/.git/modules/git/#{@repo.projects[0].name}/#{@repo.projects[0].branch}/#{@repo.projects[0].name}/index"
+    # require 'pry'
+    # binding.pry
+    @commits = []
+    @g.log.each {|l| @commits.push([l.message, l.sha]) }
+    puts @commits
     @diff = @g.diff
   end
 
@@ -28,8 +31,18 @@ class ReposController < ApplicationController
   
   def commit
     @repo.projects[0].update_project_xml
-    @repo.commit
+    @repo.commit_push(params['commit_message'])
   end
+  
+  def create_pull_request
+    @repo.create_pull_request
+  end
+  
+  def revert_to_commit
+    
+  end
+  
+  
 
   # POST /repos
   # POST /repos.json

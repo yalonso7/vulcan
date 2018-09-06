@@ -44,6 +44,8 @@ Rails.application.routes.draw do
   match 'update_code' => 'project_controls#update_code', :as => :update_code, :via => :post
   match 'create_request' => 'resuests#create_request', :as => :create_request, :via => :post
   match 'repo/:id/commit' => 'repos#commit', :as => :commit, :via => :put
+  match 'repo/:id/create_pull_request' => 'repos#create_pull_request', :as => :create_pull_request, :via => :put
+  match 'revert_to_commit' => 'repos#revert_to_commit', :as => :revert_to_commit, :via => :put
 
   match 'project/:id/approve_project' => 'projects#approve_project', :as => :approve_project, :via => :post
   

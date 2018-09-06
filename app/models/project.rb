@@ -62,7 +62,7 @@ class Project < ApplicationRecord
   
   def create_local_git(user_email)
     create_master_git
-    create_user_projects
+    # create_user_projects
   end
   
   def to_xccdf(params)
@@ -112,8 +112,7 @@ class Project < ApplicationRecord
       user_project.users.each {|user| user.add_role(user.roles.first.name, user_project) }
       Dir.mkdir("#{Rails.root}/git/#{self.name}/#{user.email}")
       Dir.chdir("#{Rails.root}/git/#{self.name}/#{user.email}")
-      # system("git submodule add -f #{Rails.root}/git/#{self.name}/srv/#{self.name}.git")
-      system("git subtree add --prefix #{Rails.root}/git/#{self.name}/#{user.email} #{Rails.root}/git/#{self.name}/srv/#{self.name}.git master")
+      system("git submodule add -f #{Rails.root}/git/#{self.name}/srv/#{self.name}.git")
       Dir.chdir("#{Rails.root}/git/#{self.name}/#{user.email}/#{self.name}")
       system("git checkout -b #{user.email}")
       system('git commit -m "Initial Commit"')
@@ -129,12 +128,10 @@ class Project < ApplicationRecord
     Dir.mkdir("#{Rails.root}/git/#{self.name}/srv/#{self.name}.git")
     Dir.chdir("#{Rails.root}/git/#{self.name}/srv/#{self.name}.git")
     system("git init --bare")
-    # Dir.mkdir("#{Rails.root}/git/#{self.name}/master")
-    # Dir.chdir("#{Rails.root}/git/#{self.name}/master")
-    require 'pry'
-    binding.pry
-    system("git subtree add --prefix #{Rails.root}/git/#{self.name}/master #{Rails.root}/git/#{self.name}/srv/#{self.name}.git master")
+    Dir.mkdir("#{Rails.root}/git/#{self.name}/master")
     Dir.chdir("#{Rails.root}/git/#{self.name}/master")
+    system("git submodule add -f #{Rails.root}/git/#{self.name}/srv/#{self.name}.git")
+    Dir.chdir("#{Rails.root}/git/#{self.name}/master/#{self.name}")
     system("touch README.md")
     File.open('vulcan_project.xml', 'w') { |file| file.write(to_xml) }
     system('git add .')
