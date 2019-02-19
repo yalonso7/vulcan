@@ -1,0 +1,26 @@
+version: '3.5'
+
+services:
+#  db:
+#    image: postgres
+#    volumes:
+#      - sqlite-data:/var/www/vulcan/db
+#      # - ./tmp/db:/var/www/vulcan/db
+  web:
+    image: mitre/vulcan
+    #command: 
+    volumes:
+      - sqlite-data:/var/www/vulcan/db-data
+    #   - .:/var/www/vulcan
+    environment:
+      RAILS_ENV: "production"
+      RAILS_LOG_TO_STDOUT: "true"
+      RAILS_SERVE_STATIC_FILES: "true"
+      RAILS_RELATIVE_URL_ROOT: /vulcan
+    ports:
+      - "3030:3030"
+    # depends_on:
+    #   - db
+volumes:
+  sqlite-data:
+  

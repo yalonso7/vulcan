@@ -11,6 +11,7 @@ pkg_dep=(
   core/coreutils
   core/glibc
   core/sassc
+  core/libxslt
   #core/bundler
 )
 
@@ -23,6 +24,8 @@ pkg_build_deps=(
   core/glibc
   core/libffi
   core/make
+  core/sassc
+  core/libxslt
 )
 
 #do_build() {
@@ -43,6 +46,6 @@ do_prepare() {
 
   # Bundler/gem seems to set the rpath for compiled extensions using LD_RUN_PATH.
   # Dynamic linking fails if this is not set
-  LD_RUN_PATH="$(pkg_path_for gcc-libs)/lib:$(pkg_path_for libffi)/lib:$(pkg_path_for sqlite)/lib:$(pkg_path_for libxml2)/lib:$(pkg_path_for imagemagick)/lib:$(pkg_path_for coreutils)/lib:$(pkg_path_for sassc)/lib:$(pkg_path_for glibc)/lib"
+  LD_RUN_PATH="$(pkg_path_for gcc-libs)/lib:$(pkg_path_for libffi)/lib:$(pkg_path_for sqlite)/lib:$(pkg_path_for libxml2)/lib:$(pkg_path_for imagemagick)/lib:$(pkg_path_for coreutils)/lib:$(pkg_path_for sassc)/lib:$(pkg_path_for glibc)/lib:$(pkg_path_for libxslt)/lib"
   export LD_RUN_PATH
 }
