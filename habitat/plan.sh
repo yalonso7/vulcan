@@ -11,7 +11,7 @@ pkg_dep=(
   core/coreutils
   core/glibc
   core/sassc
-  core/bundler
+  #core/bundler
 )
 
 pkg_build_deps=(
@@ -21,6 +21,8 @@ pkg_build_deps=(
   core/gcc-libs
   core/gcc
   core/glibc
+  core/libffi
+  core/make
 )
 
 #do_build() {
@@ -29,7 +31,18 @@ pkg_build_deps=(
 #}
 
 
-#do_prepare() {
-#    do_default_prepare
-#    _bundler_version="1.17.3"
-#}
+do_prepare() {
+    do_default_prepare
+    _bundler_version="1.17.3"
+
+  #local _bundler_dir
+  #_bundler_dir=$(pkg_path_for bundler)
+
+  #export GEM_HOME=${pkg_path}/vendor/bundle
+  #export GEM_PATH=${_bundler_dir}:${GEM_HOME}
+
+  # Bundler/gem seems to set the rpath for compiled extensions using LD_RUN_PATH.
+  # Dynamic linking fails if this is not set
+  LD_RUN_PATH="$(pkg_path_for gcc-libs)/lib:$(pkg_path_for libffi)/lib:$(pkg_path_for sqlite)/lib:$(pkg_path_for libxml2)/lib:$(pkg_path_for imagemagick)/lib:$(pkg_path_for coreutils)/lib:$(pkg_path_for sassc)/lib:$(pkg_path_for glibc)/lib"
+  export LD_RUN_PATH
+}
