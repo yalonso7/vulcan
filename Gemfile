@@ -7,6 +7,7 @@ end
 
 gem "inspec", '~> 3.0'
 gem 'roo'
+gem 'factory_bot_rails'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.1.6'
@@ -42,7 +43,7 @@ group :development, :test do
   gem 'capybara', '~> 2.13'
   gem 'selenium-webdriver'
   gem 'rspec-rails', '~> 3.7'
-  gem 'factory_bot_rails'
+  # gem 'factory_bot_rails'
   gem 'database_cleaner', '~> 1.6', '>= 1.6.1'
   gem 'rails-controller-testing'
 end
@@ -66,7 +67,6 @@ end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data'
-
 gem "bootstrap"
 #gem 'jquery-rails'
 gem 'jquery-ui-rails'
@@ -77,29 +77,18 @@ gem "sassc-rails", '~> 2.0'
 gem 'jquery-datatables', '~> 1.10.19'
 # gem 'webpacker', '~> 3.3'
 gem 'word_wrap'
-
 gem 'nokogiri-happymapper', :require => 'happymapper'
 # gem 'axlsx', '2.1.0.pre'
 # gem 'axlsx_rails'
 
 gem 'responders', '~> 2.0'
-
 gem 'devise'
-
 gem 'omniauth-github'
-
 gem "attr_encrypted", "~> 3.0.0"
-
 gem 'ace-rails-ap'
-
 gem 'rolify'
-
 gem "devise_ldap_authenticatable"
-
 gem 'faker'
-
 gem 'cancancan', '~> 2.0'
-
 gem 'blamer'
-
 gem 'inspec_tools' #, :git => 'https://github.com/mitre/inspec_tools.git'

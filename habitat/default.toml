@@ -5,5 +5,9 @@
 
 secret_key_base = "dc5681b2f75afe6a6a10df8785f64deb5473f8825ada74fc66d5e71812484674392bf7d822bc05a3a7e1e17580e5b4ec2d3f41b2f104462f01cf5f83676bf898"
 
-rails_env = "production"
+rails_env = "development"
 
+[db]
+
+adapter = "sqlite"
+port = ""

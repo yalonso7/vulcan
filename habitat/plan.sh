@@ -12,6 +12,7 @@ pkg_dep=(
   core/glibc
   core/sassc
   core/libxslt
+  #core/ruby
   #core/bundler
 )
 
@@ -26,6 +27,8 @@ pkg_build_deps=(
   core/make
   core/sassc
   core/libxslt
+  #core/ruby
+  core/sqlite
 )
 
 #do_build() {
