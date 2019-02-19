@@ -15,7 +15,7 @@ gem 'sqlite3', '~> 1.3', '~> 1.3.6'
 # Use Puma as the app server
 gem 'puma', '~> 3.7'
 # Use SCSS for stylesheets
-gem 'sass-rails', '~> 5.0'
+#gem 'sassc-rails'
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'
 # See https://github.com/rails/execjs#readme for more supported runtimes
@@ -65,15 +65,16 @@ group :test do
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
-gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
+gem 'tzinfo-data'
 
-gem "bootstrap", ">= 4.1.2"
-gem 'jquery-rails'
+gem "bootstrap"
+#gem 'jquery-rails'
 gem 'jquery-ui-rails'
 gem "flot-rails"
-gem 'jquery-datatables-rails', '~> 3.4.0'
 gem "font-awesome-rails"
-
+gem "jquery-rails", '~> 4.3'
+gem "sassc-rails", '~> 2.0'
+gem 'jquery-datatables', '~> 1.10.19'
 # gem 'webpacker', '~> 3.3'
 gem 'word_wrap'
 

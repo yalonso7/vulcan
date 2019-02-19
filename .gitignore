@@ -28,7 +28,7 @@
 .ruby-version
 
 # Ignore lock file
-Gemfile.lock
+#Gemfile.lock
 
 # Ignore sass-cache dir
 .sass-cache*
@@ -42,3 +42,4 @@ Gemfile.lock
 # Ignore db-data
 
 /db-data/**
+results/
