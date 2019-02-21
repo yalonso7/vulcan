@@ -8,9 +8,11 @@ end
 gem "inspec", '~> 3.0'
 gem 'roo'
 gem 'factory_bot_rails'
+gem 'pg'
+# console support
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 5.1.6'
+gem 'rails', '~> 5.2'
 # Use sqlite3 as the database for Active Record
 gem 'sqlite3', '~> 1.3', '~> 1.3.6'
 # Use Puma as the app server
@@ -46,6 +48,7 @@ group :development, :test do
   # gem 'factory_bot_rails'
   gem 'database_cleaner', '~> 1.6', '>= 1.6.1'
   gem 'rails-controller-testing'
+  gem 'rb-readline'
 end
 
 group :development do

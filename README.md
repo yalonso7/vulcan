@@ -42,6 +42,7 @@ For Ruby (on Ubuntu):
   * Bundler
   * `libq-dev`
   * nodejs
+  * libpq ( if using postgresql backend db )
 
 ## Run with Ruby
 
@@ -51,6 +52,10 @@ For Ruby (on Ubuntu):
   4. `bundle exec rake db:migrate`
   5. `bundle exec rails server`
   6. Navigate to `localhost:3030`
+
+### Notes
+
+- see https://michaelrigart.be/install-pg-ruby-gem-without-postgresql/
 
 ## Run with Docker
 
