@@ -80,6 +80,6 @@ development:
 #
 production:
   <<: *default
-  database: vulcan
-  username: admin
-  password: admin
+  database: <%= ENV['DATABASE_NAME'] %>
+  username: <%= ENV['DATABASE_USER'] %>
+  password: <%= ENV['DATABASE_PASS'] %>

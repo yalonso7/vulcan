@@ -7,9 +7,11 @@ secret_key_base="432bb028e0e7028534c0d482717634fc7930db5b8411ee34fc5d9c465265f9e
 rails_env='production'
 
 [db]
+#database="<%= ENV['DATABASE_NAME'] %>"
+#user="<%= ENV['DATABASE_USER'] %>"
+#password="<%= ENV['DATABASE_PASS'] %>"
 user="vulcanadm"
 password="1qaz!QAZ1qaz!QAZ"
 host="vulcan.ctp9kse964go.us-east-1.rds.amazonaws.com"
-
 #adapter="postgresql"
 #port="5432"
