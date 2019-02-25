@@ -56,3 +56,8 @@ do_prepare() {
   LD_RUN_PATH="$(pkg_path_for gcc-libs)/lib:$(pkg_path_for libffi)/lib:$(pkg_path_for sqlite)/lib:$(pkg_path_for libxml2)/lib:$(pkg_path_for imagemagick)/lib:$(pkg_path_for coreutils)/lib:$(pkg_path_for sassc)/lib:$(pkg_path_for glibc)/lib:$(pkg_path_for libxslt)/lib:$(pkg_path_for openssl)/lib"
   export LD_RUN_PATH
 }
+
+do_after() {
+  # remove this symlink
+  rm -rf ${pkg_path}/tmp
+}

@@ -8,8 +8,8 @@ set -e
 #pg_isready -d {{pkg.env.DATABASE_URL}}
 #if [ $? -eq 1 ]
 #then
-  vulcan-rake db:setup
-  #vulcan-rake db:migrate
+#  vulcan-rake db:setup
+#  vulcan-rake db:migrate
 #else
 #  echo "Database is ready! Skipping create..."
-#f
+#if

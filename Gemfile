@@ -9,6 +9,8 @@ gem "inspec", '~> 3.0'
 gem 'roo'
 gem 'factory_bot_rails'
 gem 'pg'
+gem 'thor', '= 0.20.0'
+
 # console support
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
