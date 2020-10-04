@@ -8,7 +8,7 @@
     "@rails/ujs": "^6.0.0",
     "@rails/webpacker": "5.1.1",
     "bootstrap": "^4.4.1",
-    "bootstrap-vue": "^2.13.0",
+    "bootstrap-vue": "^2.16.0",
     "turbolinks": "^5.2.0",
     "vue": "^2.6.11",
     "vue-loader": "^15.9.2",
