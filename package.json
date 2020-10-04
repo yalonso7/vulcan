@@ -2,7 +2,7 @@
   "name": "vulcan_vue",
   "private": true,
   "dependencies": {
-    "@mdi/font": "^5.1.45",
+    "@mdi/font": "^5.5.55",
     "@rails/actioncable": "^6.0.0",
     "@rails/activestorage": "^6.0.0",
     "@rails/ujs": "^6.0.0",
