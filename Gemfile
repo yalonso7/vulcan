@@ -25,7 +25,7 @@ gem 'omniauth', '~> 1.8'
 # LDAP Auth
 # GitLab fork with several improvements to original library. For full list of changes
 # see https://github.com/intridea/omniauth-ldap/compare/master...gitlabhq:master
-gem 'gitlab_omniauth-ldap', '~> 2.1.1', require: 'omniauth-ldap'
+gem 'gitlab_omniauth-ldap', '~> 2.2.0', require: 'omniauth-ldap'
 # Allow users to sign in with GitHub
 gem 'omniauth-github'
 # https://github.com/omniauth/omniauth/wiki/Resolving-CVE-2015-9284
