@@ -21,15 +21,15 @@ gem 'haml-rails', '~> 2.0'
 # Add Devise for authentication
 gem 'devise'
 # Use Omniauth to support additional login providers
-gem 'omniauth', '~> 1.8'
+gem 'omniauth', '~> 2.0', '>= 2.0.0'
 # LDAP Auth
 # GitLab fork with several improvements to original library. For full list of changes
 # see https://github.com/intridea/omniauth-ldap/compare/master...gitlabhq:master
-gem 'gitlab_omniauth-ldap', '~> 2.1.1', require: 'omniauth-ldap'
+gem 'gitlab_omniauth-ldap', '~> 2.2.0', require: 'omniauth-ldap'
 # Allow users to sign in with GitHub
-gem 'omniauth-github'
+gem 'omniauth-github', '>= 2.0.0'
 # https://github.com/omniauth/omniauth/wiki/Resolving-CVE-2015-9284
-gem 'omniauth-rails_csrf_protection', '~> 0.1'
+gem 'omniauth-rails_csrf_protection', '~> 0.1', '>= 0.1.2'
 # Vulcan settings
 gem 'settingslogic', '~> 2.0.9'
 # Use Redis adapter to run Action Cable in production
