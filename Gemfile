@@ -5,21 +5,21 @@ source 'https://rubygems.org'
 ruby '2.7.1'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 6.0.2', '>= 6.0.2.2'
+gem 'rails', '~> 6.1.7', '>= 6.1.7.5'
 # Use postgresql as the database for Active Record
 gem 'pg', '>= 0.18', '< 2.0'
 # Use Puma as the app server
 gem 'puma', '~> 4.3'
 # Transpile app-like JavaScript. Read more: https://github.com/rails/webpacker
-gem 'webpacker', '~> 5.0'
+gem 'webpacker', '~> 5.2', '>= 5.2.0'
 # Turbolinks makes navigating your web application faster. Read more: https://github.com/turbolinks/turbolinks
 gem 'turbolinks', '~> 5'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
-gem 'jbuilder', '~> 2.7'
+gem 'jbuilder', '~> 2.10', '>= 2.10.1'
 # Use HAML instead of ERB
-gem 'haml-rails', '~> 2.0'
+gem 'haml-rails', '~> 2.1', '>= 2.1.0'
 # Add Devise for authentication
-gem 'devise'
+gem 'devise', '>= 4.7.2'
 # Use Omniauth to support additional login providers
 gem 'omniauth', '~> 1.8'
 # LDAP Auth
@@ -29,7 +29,7 @@ gem 'gitlab_omniauth-ldap', '~> 2.1.1', require: 'omniauth-ldap'
 # Allow users to sign in with GitHub
 gem 'omniauth-github'
 # https://github.com/omniauth/omniauth/wiki/Resolving-CVE-2015-9284
-gem 'omniauth-rails_csrf_protection', '~> 0.1'
+gem 'omniauth-rails_csrf_protection', '~> 1.0', '>= 1.0.0'
 # Vulcan settings
 gem 'settingslogic', '~> 2.0.9'
 # Use Redis adapter to run Action Cable in production
@@ -51,7 +51,7 @@ end
 group :development do
   # Access an interactive console on exception pages or by calling 'console' anywhere in the code.
   gem 'listen', '>= 3.0.5', '< 3.2'
-  gem 'web-console', '>= 3.3.0'
+  gem 'web-console', '>= 4.0.2'
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'letter_opener'
   gem 'spring'
@@ -66,14 +66,14 @@ group :test do
   gem 'webdrivers'
 
   gem 'rubocop', require: false
-  gem 'rubocop-rails'
+  gem 'rubocop-rails', '>= 2.6.0'
   gem 'simplecov', require: false
 end
 
 group :development, :test do
-  gem 'factory_bot_rails', '~> 5.2.0'
+  gem 'factory_bot_rails', '~> 6.0.0'
   gem 'ffaker', '~> 2.10'
-  gem 'rspec-rails', '~> 4.0.0'
+  gem 'rspec-rails', '~> 4.0.2'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
