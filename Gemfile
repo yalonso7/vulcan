@@ -73,7 +73,7 @@ end
 group :development, :test do
   gem 'factory_bot_rails', '~> 5.2.0'
   gem 'ffaker', '~> 2.10'
-  gem 'rspec-rails', '~> 4.0.0'
+  gem 'rspec-rails', '~> 8.0.0'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
