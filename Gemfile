@@ -71,7 +71,7 @@ group :test do
 end
 
 group :development, :test do
-  gem 'factory_bot_rails', '~> 5.2.0'
+  gem 'factory_bot_rails', '~> 6.5.0'
   gem 'ffaker', '~> 2.10'
   gem 'rspec-rails', '~> 4.0.0'
 end
