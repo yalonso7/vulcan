@@ -27,7 +27,7 @@ gem 'omniauth', '~> 1.8'
 # see https://github.com/intridea/omniauth-ldap/compare/master...gitlabhq:master
 gem 'gitlab_omniauth-ldap', '~> 2.1.1', require: 'omniauth-ldap'
 # Allow users to sign in with GitHub
-gem 'omniauth-github'
+gem 'omniauth-github', '>= 2.0.0'
 # https://github.com/omniauth/omniauth/wiki/Resolving-CVE-2015-9284
 gem 'omniauth-rails_csrf_protection', '~> 0.1'
 # Vulcan settings
